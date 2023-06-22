@@ -1,0 +1,22 @@
+{% block content %}
+	<h5>Author {{BlogDetail.author}}</h5>
+	<h3>{{ BlogDetail.title }}</h3>
+	<p>{{ BlogDetail.body }}</p>
+	<pre>{{ BlogDetail.body1 }}</pre>
+	<p>{{ BlogDetail.body2 }}</p>
+	<img src="{{ BlogDetail.cover.url }}" alt="{{BlogDetail.cover}}" width="400" height="400"/>
+
+
+	{% for cmt in BlogDetail.comment_set.all %}
+		<p><strong style="margin-right: 10px; background-color: grey">{{ cmt.createdBy }}</strong>{{ cmt.text }}</p>
+	{% endfor %}
+
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit" class="submitbtn">Comment</button>
+	</form>
+
+	<a href="{% url 'SimpleBlog:postComment' BlogDetail.slug BlogDetail.id %}">SimpleBlog:postcomment</a>
+
+{% endblock content %}
